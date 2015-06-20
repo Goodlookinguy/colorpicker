@@ -377,12 +377,9 @@ $.widget( "evol.colorpicker", {
 				}
 			})
 			.on('mouseover', sel, function(evt){
-				console.log("mouseover event fired");
 				if(that._enabled){
 					var $this=$(this),
 						c=$this.hasClass('evo-transparent')?transColor:toHex3($this.attr('style').substring(17));
-					console.log("C: " + c);
-					console.log("D: " + $this.attr('style'));
 					if(that.options.displayIndicator){
 						that._setColorInd(c,2);
 					}
