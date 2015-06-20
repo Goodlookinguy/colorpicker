@@ -56,6 +56,10 @@ var _idx=0,
 		return h+h+h;
 	},
 	toHex3=function(c){
+		var importantStyle = c.indexOf('!important');
+		if (importantStyle >= 0)
+			c = c.substring(0, importantStyle);
+		
 		if(c.length>10){ // IE9
 			var p1=1+c.indexOf('('),
 				p2=c.indexOf(')'),
@@ -192,7 +196,7 @@ $.widget( "evol.colorpicker", {
 		var opts=this.options,
 			labels=opts.strings.split(','),
 			oTD='<td style="background-color:#',
-			cTD=isIE?'"><div style="width:2px;"></div></td>':'"><span/></td>',
+			cTD=isIE?'"><div style="width:2px;"></div></td>':' !important"><span/></td>',
 			oTRTH='<tr><th colspan="10" class="ui-widget-content">';
 
 		// base theme colors
@@ -236,7 +240,7 @@ $.widget( "evol.colorpicker", {
 	_paletteHTML2: function() {
 		var i, iMax,
 			oTD='<td style="background-color:#',
-			cTD=isIE?'"><div style="width:5px;"></div></td>':'"><span/></td>',
+			cTD=isIE?'"><div style="width:5px;"></div></td>':' !important"><span/></td>',
 			oTableTR='<table class="evo-palette2'+_ie+'"><tr>',
 			cTableTR='</tr></table>';
 
@@ -373,9 +377,12 @@ $.widget( "evol.colorpicker", {
 				}
 			})
 			.on('mouseover', sel, function(evt){
+				console.log("mouseover event fired");
 				if(that._enabled){
 					var $this=$(this),
 						c=$this.hasClass('evo-transparent')?transColor:toHex3($this.attr('style').substring(17));
+					console.log("C: " + c);
+					console.log("D: " + $this.attr('style'));
 					if(that.options.displayIndicator){
 						that._setColorInd(c,2);
 					}
